@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import React, { useState } from "react";
+import { GlobalStyle } from "./GlobalStyles/GlobalStyle";
+import Login from "./components/user/login";
 
-function App() {
+export default function App() {
+  console.log("renderizou");
+  // LOGIC
+
+  // UI
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <h1>Testando</h1>
+      <Login />
+    </>
   );
 }
 
-export default App;
+const Btn = styled.button`
+  height: 50px;
+  width: 50px;
+  background-color: blue;
+`;
