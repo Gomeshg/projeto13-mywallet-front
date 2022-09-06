@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export default function Button({ text }) {
+  // LOGIC
+
+  // UI
   return <Wrapper>{text}</Wrapper>;
 }
 

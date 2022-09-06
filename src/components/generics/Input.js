@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export default function Input({ label }) {
+  // LOGIC
+
+  // UI
   return <Wrapper placeholder={label}></Wrapper>;
 }
 
