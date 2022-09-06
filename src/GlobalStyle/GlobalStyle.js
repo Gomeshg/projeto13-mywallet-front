@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     outline: none;
     text-decoration: none;
-    font-family: 'Lexend Deca', sans-serif;
+    font-family: 'Helvetica', sans-serif;
     font-weight: 400;
   }
 
@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Saira Stencil One";
     font-size: 32px;
     font-weight: 400;
+    color: white;
   }
 `;
 
