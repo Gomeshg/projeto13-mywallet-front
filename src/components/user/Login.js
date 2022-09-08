@@ -9,7 +9,7 @@ export default function Login() {
         <h1>MyWallet</h1>
         <Input label="E-mail" />
         <Input label="Senha" />
-        <Button text="Entrar" />
+        <Button text="Entrar" type="rectangle" />
         <Link>Primeira vez? Cadastre-se!</Link>
       </Content>
     </Wrapper>

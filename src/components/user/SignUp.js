@@ -11,7 +11,7 @@ export default function SignUp() {
         <Input label="E-mail" />
         <Input label="Senha" />
         <Input label="Confirmar a senha" />
-        <Button text="Cadastrar" />
+        <Button text="Cadastrar" type="rectangle" />
         <Link>Já tem uma conta? Entre agora!</Link>
       </Content>
     </Wrapper>

@@ -3,6 +3,7 @@
 import { GlobalStyle } from "../GlobalStyle/GlobalStyle";
 import Login from "./user/Login";
 import SignUp from "./user/SignUp";
+import CurrentAccount from "./wallet/CurrentAccount";
 
 export default function App() {
   // LOGIC
@@ -12,7 +13,8 @@ export default function App() {
     <>
       <GlobalStyle />
       {/* <Login /> */}
-      <SignUp />
+      {/* <SignUp /> */}
+      <CurrentAccount />
     </>
   );
 }

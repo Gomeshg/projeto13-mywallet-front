@@ -18,6 +18,13 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     color: white;
   }
+
+  h2{
+    font-family: "Raleway";
+    font-weight: 700;
+    font-size: 26px;
+    color: white;
+  }
 `;
 
 export { GlobalStyle };
