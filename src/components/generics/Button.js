@@ -3,22 +3,22 @@ import Icon from "./iconSquareButton";
 import add from "../../img/add.png";
 import sub from "../../img/sub.png";
 
-export default function Button({ type, text }) {
+export default function Button({ text, type }) {
   if (type === "rectangle") {
     return (
       <RectangleButton>
-        <Text>{text}</Text>
+        <Text type={type}>{text}</Text>
       </RectangleButton>
     );
   } else if (type === "square") {
     return (
       <SquareButton>
         {text === "Nova Entrada" ? (
-          <Icon insideIcon={add} nameIcon="add" />
+          <Icon insideIcon={add} type="add" />
         ) : (
-          <Icon insideIcon={sub} nameIcon="sub" />
+          <Icon insideIcon={sub} type="sub" />
         )}
-        <Text>{text}</Text>
+        <Text type={type}>{text}</Text>
       </SquareButton>
     );
   }
@@ -30,8 +30,11 @@ const Text = styled.p`
   font-weight: 700;
   color: white;
 
-  /* background-color: red; */
-  width: 60px;
+  width: ${(props) => {
+    if (props.type === "square") {
+      return "60px";
+    }
+  }};
 `;
 
 const RectangleButton = styled.div`
@@ -44,6 +47,10 @@ const RectangleButton = styled.div`
   font-size: 20px;
 
   cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SquareButton = styled.div`

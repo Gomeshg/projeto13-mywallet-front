@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import circle from "../../img/circle.png";
 
-export default function Icon({ insideIcon, nameIcon }) {
+export default function Icon({ insideIcon, type }) {
   return (
     <Wrapper img={circle}>
       <OutsideIcon src={circle} alt=""></OutsideIcon>
-      <InsideIcon src={insideIcon} sizes={nameIcon}></InsideIcon>
+      <InsideIcon src={insideIcon} type={type}></InsideIcon>
     </Wrapper>
   );
 }
@@ -19,11 +19,11 @@ const Wrapper = styled.div`
 const InsideIcon = styled.img`
   position: absolute;
 
-  width: ${(props) => (props.sizes === "add" ? "10px" : "10px")};
-  height: ${(props) => (props.sizes === "add" ? "10px" : "2.5px")};
+  width: ${(props) => (props.type === "add" ? "10px" : "10px")};
+  height: ${(props) => (props.type === "add" ? "10px" : "2.5px")};
 
-  top: ${(props) => (props.sizes === "add" ? "6.5px" : "10.5px")};
-  left: ${(props) => (props.sizes === "add" ? "6.5px" : "6.5px")};
+  top: ${(props) => (props.type === "add" ? "6.5px" : "10.5px")};
+  left: ${(props) => (props.type === "add" ? "6.5px" : "6.5px")};
 `;
 
 const OutsideIcon = styled.img`
