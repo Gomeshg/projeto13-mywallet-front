@@ -1,24 +1,25 @@
 import styled from "styled-components";
-import Icon from "./iconSquareButton";
-import add from "../../img/add.png";
-import sub from "../../img/sub.png";
 
-export default function Button({ text, type }) {
-  if (type === "rectangle") {
+export default function Button({ submit, text, typeButton, status }) {
+  {
+    /* <ion-icon name="trash-outline"></ion-icon> */
+  }
+
+  if (typeButton === "rectangle") {
     return (
-      <RectangleButton>
-        <Text type={type}>{text}</Text>
+      <RectangleButton type={submit} disabled={status} status={status}>
+        <Text typeButton={typeButton}>{text}</Text>
       </RectangleButton>
     );
-  } else if (type === "square") {
+  } else if (typeButton === "square") {
     return (
       <SquareButton>
         {text === "Nova Entrada" ? (
-          <Icon insideIcon={add} type="add" />
+          <ion-icon name="add-circle-outline"></ion-icon>
         ) : (
-          <Icon insideIcon={sub} type="sub" />
+          <ion-icon name="remove-circle-outline"></ion-icon>
         )}
-        <Text type={type}>{text}</Text>
+        <Text typeButton={typeButton}>{text}</Text>
       </SquareButton>
     );
   }
@@ -26,18 +27,19 @@ export default function Button({ text, type }) {
 
 const Text = styled.p`
   font-family: "Raleway", "Helvetica", sans-serif;
-  font-size: ${(props) => (props.type === "rectangle" ? "20px" : "17px")};
+  font-size: ${(props) => (props.typeButton === "rectangle" ? "20px" : "17px")};
   font-weight: 700;
   color: white;
 
+  text-align: start;
   width: ${(props) => {
-    if (props.type === "square") {
-      return "60px";
+    if (props.typeButton === "square") {
+      return "50px";
     }
   }};
 `;
 
-const RectangleButton = styled.div`
+const RectangleButton = styled.button`
   height: 46px;
   width: 326px;
 
@@ -46,14 +48,14 @@ const RectangleButton = styled.div`
 
   font-size: 20px;
 
-  cursor: pointer;
+  cursor: ${(props) => (props.status ? "wait" : "pointer")};
 
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const SquareButton = styled.div`
+const SquareButton = styled.button`
   height: 114px;
   width: 155px;
   padding: 10px;

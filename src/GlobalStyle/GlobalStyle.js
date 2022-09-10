@@ -25,6 +25,18 @@ const GlobalStyle = createGlobalStyle`
     font-size: 26px;
     color: white;
   }
+
+  a{
+    font-family: "Raleway";
+    font-weight: 700;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+  }
+
+  ion-icon{
+    font-size: 25px;
+  }
 `;
 
 export { GlobalStyle };

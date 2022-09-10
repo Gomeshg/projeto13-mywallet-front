@@ -1,29 +1,66 @@
 import styled from "styled-components";
-// import Button from "../generics/Button";
-
+import WalletData from "./WalletData";
 export default function Wallet({ data }) {
-  return (
-    <Wrapper isEmpty={data.length === 0 ? true : false}>
-      {data.length === 0 ? (
+  if (data.length === 0) {
+    return (
+      <WrapperEmpty>
         <TextDataEmpty>Não há registros de entrada ou saída</TextDataEmpty>
-      ) : (
-        <p>Bunda</p>
-      )}
+      </WrapperEmpty>
+    );
+  }
+
+  let balance = 0;
+  data.forEach((item) =>
+    item.type === "input" ? (balance += item.value) : (balance -= item.value)
+  );
+
+  return (
+    <Wrapper>
+      <section>
+        {data.map((data, index) => (
+          <WalletData
+            key={index}
+            type={data.type}
+            value={data.value}
+            description={data.description}
+            date={data.date}
+            userID={data.userID}
+          />
+        ))}
+      </section>
+
+      <section>
+        {data.length !== 0 ? <WalletData balance={balance} /> : ""}
+      </section>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
+const WrapperEmpty = styled.div`
   height: 446px;
   width: 326px;
+  padding: 15px 10px;
 
   background-color: white;
   border-radius: 5px;
 
-  display: ${(props) => (props.isEmpty ? "Flex" : "Block")};
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+`;
+
+const Wrapper = styled.div`
+  height: 446px;
+  width: 326px;
+  padding: 15px 10px;
+
+  background-color: white;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const TextDataEmpty = styled.div`
