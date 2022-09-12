@@ -17,13 +17,18 @@ function getData(config) {
   return promise;
 }
 
+function getOneData(id, config) {
+  const promise = axios.get(`${BASE_URL}/oneWallet/${id}`, config);
+  return promise;
+}
+
 function postData(body, config) {
   const promise = axios.post(`${BASE_URL}/wallet`, body, config);
   return promise;
 }
 
 function updateData(id, body, config) {
-  const promise = axios.put(`${BASE_URL}/wallet/${id}`,config);
+  const promise = axios.put(`${BASE_URL}/wallet/${id}`, body, config);
   return promise;
 }
 
@@ -32,4 +37,12 @@ function deleteData(id, config) {
   return promise;
 }
 
-export { postSignIn, postSignUp, getData, postData, updateData, deleteData };
+export {
+  postSignIn,
+  postSignUp,
+  getData,
+  getOneData,
+  postData,
+  updateData,
+  deleteData,
+};

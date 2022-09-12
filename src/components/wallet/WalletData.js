@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { deleteData, getData } from "../../services/APIs";
+import { deleteData, getData, getOneData } from "../../services/APIs";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSession } from "../../services/session";
@@ -14,7 +14,8 @@ export default function WalletData({
   balance,
   setWallet,
 }) {
-  const { session } = useSession();
+  const { session, setUpdateCash, setUpdateDescription, setUpdateID } =
+    useSession();
   const navigate = useNavigate();
 
   const config = {
@@ -39,6 +40,23 @@ export default function WalletData({
   }
 
   function update() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    };
+
+    getOneData(id, config)
+      .then((res) => {
+        console.log(res.data);
+        setUpdateCash(res.data.value);
+        setUpdateDescription(res.data.description);
+        setUpdateID(id);
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+
     navigate(`/insert-data/update/${type}`);
   }
 

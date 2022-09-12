@@ -2,18 +2,33 @@ import { useState } from "react";
 import styled from "styled-components";
 import Input from "../generics/Input";
 import Button from "../generics/Button";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { postData, updateData } from "../../services/APIs";
+import { postData, updateData, getOneData, getData } from "../../services/APIs";
+import { useSession } from "../../services/session";
 
 export default function InsertData() {
+  const navigate = useNavigate();
   const [status, setStatus] = useState(false);
   const [cash, setCash] = useState("");
   const [description, setDescription] = useState("");
+  const {
+    session,
+    updateCash,
+    updateDescription,
+    setUpdateCash,
+    setUpdateDescription,
+    updateID,
+  } = useSession();
 
   const { typeRoute, typeData } = useParams();
 
+  console.log(updateCash);
+  console.log(updateDescription);
+
   function post(e) {
     e.preventDefault();
+    alert("post");
     const body = {
       value: cash,
       description: description,
@@ -33,6 +48,25 @@ export default function InsertData() {
 
   function update(e) {
     e.preventDefault();
+
+    const body = {
+      value: updateCash,
+      description: updateDescription,
+    };
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    };
+
+    updateData(updateID, body, config)
+      .then(() => {
+        navigate("/current-account");
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   }
 
   return (
@@ -44,15 +78,19 @@ export default function InsertData() {
         </h2>
         <form onSubmit={typeRoute === "post" ? post : update}>
           <Input
+            initialValue={typeRoute === "post" ? "" : updateCash}
             label="Valor"
             type="number"
-            setValue={setCash}
+            setValue={typeRoute === "post" ? setCash : setUpdateCash}
             status={status}
           />
           <Input
+            initialValue={typeRoute === "post" ? "" : updateDescription}
             label="Descrição"
             type="text"
-            setValue={setDescription}
+            setValue={
+              typeRoute === "post" ? setDescription : setUpdateDescription
+            }
             status={status}
           />
           <Button

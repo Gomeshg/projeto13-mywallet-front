@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Input({ label, type, setValue, status }) {
+export default function Input({ initialValue, label, type, setValue, status }) {
   // LOGIC
 
   // UI
@@ -8,6 +8,7 @@ export default function Input({ label, type, setValue, status }) {
   if (type === "number") {
     return (
       <Wrapper
+        value={initialValue}
         placeholder={label}
         type={type}
         onChange={(e) => setValue(e.target.value)}
@@ -20,6 +21,7 @@ export default function Input({ label, type, setValue, status }) {
   } else {
     return (
       <Wrapper
+        value={initialValue}
         placeholder={label}
         type={type}
         onChange={(e) => setValue(e.target.value)}
