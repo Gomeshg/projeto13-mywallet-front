@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSession } from "../../services/session";
-import { getData } from "../../services/APIs";
+import { getData, logout } from "../../services/APIs";
 
 import Wallet from "./Wallet";
 import Button from "../generics/Button";
@@ -35,6 +35,18 @@ export default function CurrentAccount() {
     }
   }, [token]);
 
+  function exit() {
+    console.log(config);
+    logout(config)
+      .then(() => {
+        navigate("/sign-in");
+      })
+      .catch((e) => {
+        console.log("CATCH");
+        console.log(e);
+      });
+  }
+
   if (token === null) {
     return <Loading>Carregando...</Loading>;
   }
@@ -47,7 +59,10 @@ export default function CurrentAccount() {
   return (
     <Wrapper>
       <Content>
-        <h2>Olá, {session.name} !</h2>
+        <Header>
+          <h2>Olá, {session.name} !</h2>
+          <ion-icon onClick={exit} name="exit-outline"></ion-icon>
+        </Header>
         <Wallet data={wallet} setWallet={setWallet} />
         <ButtonBox>
           <Link to="/insert-data/post/input">
@@ -92,4 +107,15 @@ const Loading = styled.p`
   font-family: "Raleway";
   text-align: center;
   margin-top: 40vh;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ion-icon {
+    color: white;
+    cursor: pointer;
+  }
 `;

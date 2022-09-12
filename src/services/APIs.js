@@ -37,6 +37,11 @@ function deleteData(id, config) {
   return promise;
 }
 
+function logout(config) {
+  const promise = axios.delete(`${BASE_URL}/logout`, config);
+  return promise;
+}
+
 export {
   postSignIn,
   postSignUp,
@@ -45,4 +50,5 @@ export {
   postData,
   updateData,
   deleteData,
+  logout,
 };

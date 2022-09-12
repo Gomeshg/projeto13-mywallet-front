@@ -8,10 +8,6 @@ import { postData, updateData, getOneData, getData } from "../../services/APIs";
 import { useSession } from "../../services/session";
 
 export default function InsertData() {
-  const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
-  const [cash, setCash] = useState("");
-  const [description, setDescription] = useState("");
   const {
     session,
     updateCash,
@@ -20,30 +16,33 @@ export default function InsertData() {
     setUpdateDescription,
     updateID,
   } = useSession();
-
+  const navigate = useNavigate();
+  const [status, setStatus] = useState(false);
+  const [cash, setCash] = useState("");
+  const [description, setDescription] = useState("");
   const { typeRoute, typeData } = useParams();
-
-  console.log(updateCash);
-  console.log(updateDescription);
 
   function post(e) {
     e.preventDefault();
-    alert("post");
     const body = {
       value: cash,
       description: description,
       type: typeData,
     };
 
-    console.log(body);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    };
 
-    // postData(body)
-    //   .then(() => {
-    //     console.log("");
-    //   })
-    //   .catch((e) => {
-    //     console.log(e.message);
-    //   });
+    postData(body, config)
+      .then(() => {
+        navigate("/current-account");
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   }
 
   function update(e) {
@@ -78,14 +77,16 @@ export default function InsertData() {
         </h2>
         <form onSubmit={typeRoute === "post" ? post : update}>
           <Input
-            initialValue={typeRoute === "post" ? "" : updateCash}
+            initialValue={typeRoute === "post" ? cash : updateCash}
             label="Valor"
             type="number"
             setValue={typeRoute === "post" ? setCash : setUpdateCash}
             status={status}
           />
           <Input
-            initialValue={typeRoute === "post" ? "" : updateDescription}
+            initialValue={
+              typeRoute === "post" ? description : updateDescription
+            }
             label="Descrição"
             type="text"
             setValue={
