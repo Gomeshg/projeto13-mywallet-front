@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { deleteData, getData } from "../../services/APIs";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSession } from "../../services/session";
 
@@ -14,6 +15,7 @@ export default function WalletData({
   setWallet,
 }) {
   const { session } = useSession();
+  const navigate = useNavigate();
 
   const config = {
     headers: {
@@ -36,12 +38,16 @@ export default function WalletData({
       });
   }
 
+  function update() {
+    navigate(`/insert-data/update/${type}`);
+  }
+
   if (!balance) {
     return (
       <Wrapper>
         <section>
           <Date>{date}</Date>
-          <Description>{description}</Description>
+          <Description onClick={update}>{description}</Description>
         </section>
         <section>
           <Value value={type}>{`${value.toFixed(2).toString()}`}</Value>
