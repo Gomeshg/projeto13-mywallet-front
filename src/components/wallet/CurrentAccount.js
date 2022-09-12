@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "../../services/session";
 import { getData } from "../../services/APIs";
 
@@ -10,50 +10,50 @@ import Button from "../generics/Button";
 export default function CurrentAccount() {
   // LOGIC
   const { session } = useSession();
+  const [token, setToken] = useState(null);
+  const [wallet, setWallet] = useState(null);
   const navigate = useNavigate();
 
-  const data = [
-    {
-      userID: "631c6ce48f4b3db40f0e1d6b",
-      type: "output",
-      value: 220,
-      description: "Jaw",
-      date: "10/09",
-    },
-    {
-      userID: "631c6ce48f4b3db40f0e1d6b",
-      type: "output",
-      value: 80,
-      description: "Academia",
-      date: "10/09",
-    },
-    {
-      userID: "631c6ce48f4b3db40f0e1d6b",
-      type: "output",
-      value: 230,
-      description: "Minoxidil",
-      date: "10/09",
-    },
-    {
-      userID: "631c6ce48f4b3db40f0e1d6b",
-      type: "input",
-      value: 500,
-      description: "Salário Novação",
-      date: "10/09",
-    },
-  ];
+  let config = {};
+
+  if (session.token) {
+    if (token === null) {
+      setToken(session.token);
+    }
+    config = {
+      headers: {
+        Authorization: `Bearer ${session.token}`,
+      },
+    };
+  }
+
+  useEffect(() => {
+    if (token !== null) {
+      getData(config)
+        .then((req) => setWallet([...req.data]))
+        .catch((e) => console.log(e));
+    }
+  }, [token]);
+
+  if (token === null) {
+    return <Loading>Carregando...</Loading>;
+  }
+
+  if (wallet === null) {
+    return <Loading>Carregando...</Loading>;
+  }
 
   // UI
   return (
     <Wrapper>
       <Content>
         <h2>Olá, {session.name} !</h2>
-        <Wallet data={data} />
+        <Wallet data={wallet} setWallet={setWallet} />
         <ButtonBox>
-          <Link to="/insert-data/input">
+          <Link to="/insert-data/post/input">
             <Button text="Nova Entrada" typeButton="square" />
           </Link>
-          <Link to="/insert-data/output">
+          <Link to="/insert-data/post/output">
             <Button text="Nova Saída" typeButton="square" />
           </Link>
         </ButtonBox>
@@ -83,4 +83,13 @@ const Content = styled.div`
 const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const Loading = styled.p`
+  font-size: 40px;
+  color: black;
+  font-weight: 700;
+  font-family: "Raleway";
+  text-align: center;
+  margin-top: 40vh;
 `;

@@ -4,16 +4,31 @@ export default function Input({ label, type, setValue, status }) {
   // LOGIC
 
   // UI
-  return (
-    <Wrapper
-      placeholder={label}
-      type={type}
-      onChange={(e) => setValue(e.target.value)}
-      disabled={status}
-      status={status}
-      required
-    ></Wrapper>
-  );
+
+  if (type === "number") {
+    return (
+      <Wrapper
+        placeholder={label}
+        type={type}
+        onChange={(e) => setValue(e.target.value)}
+        disabled={status}
+        status={status}
+        min="0"
+        required
+      ></Wrapper>
+    );
+  } else {
+    return (
+      <Wrapper
+        placeholder={label}
+        type={type}
+        onChange={(e) => setValue(e.target.value)}
+        disabled={status}
+        status={status}
+        required
+      ></Wrapper>
+    );
+  }
 }
 
 const Wrapper = styled.input`

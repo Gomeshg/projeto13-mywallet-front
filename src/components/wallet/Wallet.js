@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import WalletData from "./WalletData";
-export default function Wallet({ data }) {
+export default function Wallet({ data, setWallet }) {
   if (data.length === 0) {
     return (
       <WrapperEmpty>
@@ -24,7 +24,9 @@ export default function Wallet({ data }) {
             value={data.value}
             description={data.description}
             date={data.date}
+            id={data._id}
             userID={data.userID}
+            setWallet={setWallet}
           />
         ))}
       </section>
@@ -61,6 +63,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 40px;
+
+  overflow: scroll;
 `;
 
 const TextDataEmpty = styled.div`

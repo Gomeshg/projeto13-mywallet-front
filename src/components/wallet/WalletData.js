@@ -1,15 +1,39 @@
 import styled from "styled-components";
+import { deleteData, getData } from "../../services/APIs";
+import { useState, useEffect } from "react";
+import { useSession } from "../../services/session";
 
 export default function WalletData({
+  id,
   userID,
   type,
   value,
   description,
   date,
   balance,
+  setWallet,
 }) {
-  if (balance) {
-    console.log(balance.toString());
+  const { session } = useSession();
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${session.token}`,
+    },
+  };
+  function remove() {
+    deleteData(id, config)
+      .then(() => {
+        getData(config)
+          .then((res) => {
+            setWallet([...res.data]);
+          })
+          .catch((e) => {
+            console.log(e.message);
+          });
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   }
 
   if (!balance) {
@@ -19,7 +43,10 @@ export default function WalletData({
           <Date>{date}</Date>
           <Description>{description}</Description>
         </section>
-        <Value value={type}>{`${value.toFixed(2).toString()}`}</Value>
+        <section>
+          <Value value={type}>{`${value.toFixed(2).toString()}`}</Value>
+          <ion-icon onClick={remove} name="trash-outline"></ion-icon>
+        </section>
       </Wrapper>
     );
   } else {
@@ -51,6 +78,11 @@ const Wrapper = styled.div`
     justify-content: flex-start;
     gap: 10px;
   }
+
+  ion-icon {
+    font-size: 18px;
+    cursor: pointer;
+  }
 `;
 
 const Date = styled.p`
@@ -61,6 +93,7 @@ const Description = styled.p`
   color: rgba(0, 0, 0, 1);
   text-align: start;
   word-break: break-word;
+  cursor: pointer;
 `;
 
 const Value = styled.p`

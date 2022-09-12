@@ -9,7 +9,6 @@ import InsertData from "./insertData/InsertData";
 
 export default function App() {
   // LOGIC
-  // const [insertType, setInsertType] = useState(null);
   // UI
   return (
     <>
@@ -19,7 +18,10 @@ export default function App() {
           <Route path="/sign-in" element={<Login />} />
           <Route path="/" element={<SignUp />} />
           <Route path="/current-account" element={<CurrentAccount />} />
-          <Route path="/insert-data/:type" element={<InsertData />} />
+          <Route
+            path="/insert-data/:typeRoute/:typeData"
+            element={<InsertData />}
+          />
         </Routes>
       </BrowserRouter>
     </>

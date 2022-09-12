@@ -1,54 +1,70 @@
+import { useState } from "react";
 import styled from "styled-components";
 import Input from "../generics/Input";
 import Button from "../generics/Button";
+import { useParams } from "react-router-dom";
+import { postData, updateData } from "../../services/APIs";
 
-export default function InsertData({ type }) {
-  // existem vários tipos de insertData, como diferenciá-los?
+export default function InsertData() {
+  const [status, setStatus] = useState(false);
+  const [cash, setCash] = useState("");
+  const [description, setDescription] = useState("");
 
-  // Inserção de dados do tipo ENTRADA
+  const { typeRoute, typeData } = useParams();
+
+  function post(e) {
+    e.preventDefault();
+    const body = {
+      value: cash,
+      description: description,
+      type: typeData,
+    };
+
+    console.log(body);
+
+    // postData(body)
+    //   .then(() => {
+    //     console.log("");
+    //   })
+    //   .catch((e) => {
+    //     console.log(e.message);
+    //   });
+  }
+
+  function update(e) {
+    e.preventDefault();
+  }
+
   return (
     <Wrapper>
       <Content>
-        <h2>Nova Entrada</h2>
-        <Input label="Valor" />
-        <Input label="Descrição" />
-        <Button text="Salvar Entrada" type="rectangle" />
+        <h2>
+          {typeRoute === "post" ? "Nova" : "Editar"}{" "}
+          {typeData === "input" ? "entrada" : "saída"}
+        </h2>
+        <form onSubmit={typeRoute === "post" ? post : update}>
+          <Input
+            label="Valor"
+            type="number"
+            setValue={setCash}
+            status={status}
+          />
+          <Input
+            label="Descrição"
+            type="text"
+            setValue={setDescription}
+            status={status}
+          />
+          <Button
+            submit="submit"
+            text="Salvar Entrada"
+            typeButton="rectangle"
+            status={status}
+          />
+        </form>
       </Content>
     </Wrapper>
   );
-
-  //   return (
-  //     <Wrapper>
-  //       <Content>
-  //         <h2>Nova Saída</h2>
-  //         <Input label="Valor" />
-  //         <Input label="Descrição" />
-  //         <Button text="Salvar Saída" type="rectangle" />
-  //       </Content>
-  //     </Wrapper>
-  //   );
-
-  //   return (
-  //     <Wrapper>
-  //       <Content>
-  //         <h2>Editar Entrada</h2>
-  //         <Input label="Valor" />
-  //         <Input label="Descrição" />
-  //         <Button text="Atualizar Entrada" type="rectangle" />
-  //       </Content>
-  //     </Wrapper>
-  //   );
-
-  //   return (
-  //     <Wrapper>
-  //       <Content>
-  //         <h2>Editar Saída</h2>
-  //         <Input label="Valor" />
-  //         <Input label="Descrição" />
-  //         <Button text="Atualizar Saída" type="rectangle" />
-  //       </Content>
-  //     </Wrapper>
-  //   );
 }
 
 const Wrapper = styled.div`
@@ -65,5 +81,11 @@ const Wrapper = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 35px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 `;
